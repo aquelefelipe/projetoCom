@@ -1,3 +1,4 @@
+# _*_coding: utf-8 _*_
 from socket import *
 serverPort = 12000
 serverSocket = socket(AF_INET, SOCK_STREAM)
@@ -8,11 +9,12 @@ serverSocket.listen(1) ##esse parametro especifica o num de conexoes tcp na fila
 print ('This server is ready to receive')
 while 1:
     ##connectioSocket vai ser um novo socket dedicado a esse cliente especifico
-    connectionSocket, addr = serverSocket._accept()
+    connectionSocket, addr = serverSocket.accept()
     #o servidor vai enviar sentence como resposta
    # sentence = str(connectionSocket.recv(4096))
    # capitalizedSentence = bytes(sentence.upper())
     sentence = connectionSocket.recv(4096)
+    print(sentence)
     capitalizedSentence = sentence.upper()
     connectionSocket.send(capitalizedSentence)
 ##nesse programa, apos ser enviada a sentença modificada, fechamos o socket da conexao
