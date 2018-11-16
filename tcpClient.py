@@ -1,6 +1,8 @@
+
 import socket
 
-serverName = '172.22.67.194'
+
+serverName = '172.22.66.119'
 serverPort = 12000
 ##cria o socket do cliente; o primeiro parametro indica que a rede subjacente está
 #usando ipv4 e o sock_stream indica que é uma conexão tcp
@@ -38,8 +40,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as clientSocket:
             clientSocket.sendall(bytes(input(" "), 'utf-8'))
             novoArquivo = clientSocket.recv(1024)
             print (f'Arquivo: ', novoArquivo.decode())
-
-    
 
 
 ######################
