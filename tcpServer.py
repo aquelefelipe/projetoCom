@@ -2,14 +2,14 @@
 import socket, json
 
 serverPort = 12000
-serverHost = '172.22.66.119'
+serverHost = '172.22.67.194'
 
 nomes = b''
 
 datas = [ 
                 {
                         "nome": "Luana",
-                        "descricaoo": "ela eh muito doidona"
+                        "descricao": "ela eh muito doidona"
                 },
 
                 {
@@ -49,37 +49,30 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serverSocket:
         #sentence.decode()
         
         #DECODIFICAÇÃO DA SOLICITAÇÃO
-        if sentence.decode() == "1" :
+        if sentence.decode() == "LISTAR" :
                 for x in datas:
                         nomes += bytes(x["nome"], "utf-8")
                         nomes += b' '
                 connectionSocket.sendall(nomes)
 
-        elif sentence.decode()[0] == "2" :
+        elif sentence.decode()[0:6] == "ARQUIVO" :
                 for x in datas:
-                        if x["nome"] == sentence.decode()[2:] :
+                        if sentence.decode()[8:] == x["nome"] :
                                 connectionSocket.sendall(bytes(x["descricao"], "utf-8"))
 
-        elif sentence.decode() == "encerrar":
+        elif sentence.decode() == "ENCERRAR":
                 connectionSocket.sendall(b'conexao encerrada')
                 connectionSocket.close()
-                print("encerrando conexão com cliente ${addr}")
+                print("encerrando conexão com cliente ${addr}", addr)
+                break
 
 
         
-
-        # capitalizedSentence = nomes
-        # connectionSocket.sendall(bytearray(capitalizedSentence))
 
 ##nesse programa, apos ser enviada a sentença modificada, fechamos o socket da conexao
 #mas o serverSocket permanece aberto, dai outro cliente pode "bater na porta"
 #e enviar uma sentence ao servidor p que seja modificada
-        
-<<<<<<< HEAD
-    connectionSocket.close()
-=======
 
->>>>>>> df87e35661ce90daeae350202ce96aa720fa6163
 
 #FUNÇÕES DO SERVIDOR
 # 1. Listar arquivos do servidor CÓDIGO 1
