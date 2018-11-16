@@ -21,5 +21,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serverSocket:
 ##nesse programa, apos ser enviada a sentença modificada, fechamos o socket da conexao
 #mas o serverSocket permanece aberto, dai outro cliente pode "bater na porta"
 #e enviar uma sentence ao servidor p que seja modificada
-        connectionSocket.close()
+        
+    connectionSocket.close()
 
