@@ -2,7 +2,7 @@
 import socket
 
 
-serverName = '172.22.64.194'
+serverName = '172.22.66.119'
 serverPort = 12000
 ##cria o socket do cliente; o primeiro parametro indica que a rede subjacente está
 #usando ipv4 e o sock_stream indica que é uma conexão tcp
@@ -12,23 +12,28 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as clientSocket:
 #e uma conexão tcp é estabelecida
     clientSocket.connect((serverName,serverPort))
 
-#essa linha obtem uma sentença do usuario, ate que o user digite um enter
+                                                    #essa linha obtem uma sentença do usuario, ate que o user digite um enter
 
-  #  sentence = input('Input lowercase sentence: ')
-#essa linha envia a cadeia sentence pelo socket do cliente e para a conexão tcp
-#
+                                                    #  sentence = input('Input lowercase sentence: ')
+                                                    #essa linha envia a cadeia sentence pelo socket do cliente e para a conexão tcp
+
     clientSocket.sendall(bytes(input(" "), 'utf-8'))
 
-#quando os caracteres chegam do servidor, eles são colocados na cadeia Modified
-#Sentence até que a linha termine
-    modifiedSentence = clientSocket.recv(1024)
-#printa a sentenca recebida em maiuscula do servidor, fechamos o socket do cliente
+                                                    #quando os caracteres chegam do servidor, eles são colocados na cadeia Modified
+                                                    #Sentence até que a linha termine
+    
+                                                    #printa a sentenca recebida em maiuscula do servidor, fechamos o socket do cliente
     #modifiedSentence.decode()
-print (f'from Server: ', modifiedSentence.decode())
->>>>>>> f0722bfdf11718218dcd292dae9e1ecd58983f3f
-##encerra a conexao tcp e fecha o socket
-##ela faz o tcp do cliente enviar uma mensagem tcp ao tcp no servidor
-clientSocket.close()
+
+# while 1:
+    modifiedSentence = clientSocket.recv(1024)
+    print (f'from Server: ', modifiedSentence.decode())
+
+# print('cheguei no cliente')
+
+                                                    ##encerra a conexao tcp e fecha o socket
+                                                    ##ela faz o tcp do cliente enviar uma mensagem tcp ao tcp no servidor
+#clientSocket.close()
 
 ######################
 #1.criar dns e fazer repositorio
