@@ -64,9 +64,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serverSocket:
                         for x in datas:
                                 if sentence.decode()[8:] == x["nome"] :
                                         response = bytes(x["descricao"], "utf-8")
-                                
-                        connectionSocket.send(response)
-
+                        connectionSocket.sendall(response)
+                
                 elif sentence.decode() == "ENCERRAR":
                         connectionSocket.sendall(b'conexao encerrada')
                         print(f'encerrando conexão com cliente {addr}')

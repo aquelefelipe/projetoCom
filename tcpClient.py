@@ -26,7 +26,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as clientSocket:
         elif request == "LISTAR":
             print("Qual arquivo você deseja?")
             print(modifiedSentence.decode())
-        elif request[:6] == "ARQUIVO":
+        elif request[:7] == "ARQUIVO":
             print(modifiedSentence.decode())
 
         request = input()
