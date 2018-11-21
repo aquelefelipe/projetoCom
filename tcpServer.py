@@ -1,8 +1,10 @@
 import socket, json
 
 serverPort = 12000
+
 serverHost = '192.168.0.13' #LUANA
 #serverHost = '192.168.0.21'  #FELIPE
+
 nomes = b''
 response = b''
 
@@ -64,7 +66,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serverSocket:
                                 if sentence.decode()[8:] == x["nome"] :
                                         response = bytes(x["descricao"], "utf-8")
                                 
-                        connectionSocket.send(response)
+                        connectionSocket.sendall(response)
 
                 elif sentence.decode() == "ENCERRAR":
                         connectionSocket.sendall(b'conexao encerrada')
