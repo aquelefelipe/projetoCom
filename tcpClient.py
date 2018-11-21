@@ -2,7 +2,7 @@
 import socket
 
 
-serverName = '172.22.66.119'
+serverName = '192.168.0.21'
 serverPort = 12000
 ##cria o socket do cliente; o primeiro parametro indica que a rede subjacente está
 #usando ipv4 e o sock_stream indica que é uma conexão tcp
@@ -14,32 +14,47 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as clientSocket:
 #essa linha obtem uma sentença do usuario, ate que o user digite um enter
 #essa linha envia a cadeia sentence pelo socket do cliente e para a conexão tcp
 
+    request = input()
     while True:
-        clientSocket.sendall(bytes(input(" "), 'utf-8'))
-        modifiedSentence = clientSocket.recv(1024) #quando os caracteres chegam do servidor, eles são colocados na cadeia ModifiedSentence até que a linha termine
-        print(f'from Server: ', modifiedSentence.decode())  #printa a sentenca recebida em maiuscula do servidor
-        str1 = 'ENCERRAR'
         
-        if modifiedSentence.decode() == str1:
-            print('Encerrando conexão\n')
-            clientSocket.close()  ##encerra a conexao tcp e fecha o socket ela faz o tcp do cliente enviar uma mensagem tcp ao tcp no servidor
+        clientSocket.sendall(bytes(request, 'utf-8'))
+        modifiedSentence= clientSocket.recv(1024)            #quando os caracteres chegam do servidor, eles são colocados na cadeia ModifiedSentence até que a linha termine
+        if request == "ENCERRAR" :
+            print(f'Encerrando conexão com Servidor: {serverName}')
+            clientSocket.close()
             break
-    
-        elif modifiedSentence.decode() == 'ARQUIVOS' :
-            #print (f'Lista de arquivos do servidor: ', modifiedSentence.decode())
-            i = 0
-            while i<5:
-                print('recebendo arquivos:\n') 
-                arquivo = clientSocket.recv(1024)
-                print (f'Arquivo: \n', arquivo.decode())
-                i += 1
-            print('Digite proximo comando :')
+        elif request == "LISTAR":
+            print("Qual arquivo você deseja?")
+            print(modifiedSentence.decode())
+        elif request[:6] == "ARQUIVO":
+            print(modifiedSentence.decode())
+
+        request = input()
         
-        else: ##Digite qualquer outra coisa
-            print('Qual o arquivo que você deseja?')
-            clientSocket.sendall(bytes(input(" "), 'utf-8'))
-            novoArquivo = clientSocket.recv(1024)
-            print (f'Arquivo: ', novoArquivo.decode())
+
+
+
+
+        # if modifiedSentence.decode() == "ENCERRAR":
+        #     print('Encerrando conexão com Servidor: {addr}\n')
+        #     clientSocket.close()                                          ##encerra a conexao tcp e fecha o socket ela faz o tcp do cliente enviar uma mensagem tcp ao tcp no servidor
+        #     break
+    
+        # elif modifiedSentence.decode() == 'ARQUIVOS' :
+        #                                                         #print (f'Lista de arquivos do servidor: ', modifiedSentence.decode())
+        #     i = 0
+        #     while i<5:
+        #         print('recebendo arquivos:\n') 
+        #         arquivo = clientSocket.recv(1024)
+        #         print (f'Arquivo: \n', arquivo.decode())
+        #         i += 1
+        #     print('Digite proximo comando :')
+        
+        # elif:                                                   ##Digite qualquer outra coisa
+        #     print('Qual o arquivo que você deseja?')
+        #     clientSocket.sendall(bytes(input(" "), 'utf-8'))
+        #     novoArquivo = clientSocket.recv(1024)
+        #     print (f'Arquivo: ', novoArquivo.decode())
 
 
 ######################
