@@ -2,6 +2,7 @@
 import socket
 
 nome = '172.22.67.194'
+#nome = '192.168.0.21'  #FELIPE
 porta = 12000
 #message = "hello, world!"
 print('Digite site desejado:')
@@ -11,7 +12,7 @@ sok =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sok.sendto(bytes(message, 'utf-8'), (nome,porta)) 
 while True:    
     print('Waiting to receive...')
-    dado, addr = sok.recvfrom(2048)
+    dado, addr = sok.recvfrom(1024)
     print (f'Endereço de luana: \n', dado.decode())
     #print(f'Recebido do DNS {addr}')
     print('Closing socket...')

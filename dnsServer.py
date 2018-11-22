@@ -1,9 +1,9 @@
 
 import socket, json
 
-serverHost = '172.22.67.194' #LUANA IP
+#serverHost = '172.22.67.194' #LUANA IP
+serverHost = '192.168.0.21'  #FELIPE
 serverPort = 12000
-end = "teste123"
 
 ##TO USANDO O dnsclient.py na pasta documentos pra testar
     
@@ -22,8 +22,8 @@ while True:
         sock =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         if dt == 'luana': #to testando com o site = luana, ai só digita luana no cliente
                 print('dt == luana')
-                message = "lua123" #seria o endereço do site solicitado
-                sock.sendto(bytes(message, 'utf-8'), (serverHost,serverPort))
+                message = b"lua123" #seria o endereço do site solicitado
+                sock.sendto( message, (serverHost, serverPort))
         break
         
 #TA FALTANDO CONFERIR CONFIABILIDADE
