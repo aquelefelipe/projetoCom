@@ -2,38 +2,38 @@ import socket, json
 
 serverPort = 12000
 
-serverHost = '172.22.67.194' #LUANA
-#serverHost = '192.168.0.21'  #FELIPE
+#serverHost = '172.22.67.194' #LUANA
+serverHost = '192.168.0.21'  #FELIPE
 
 nomes = b''
 response = b''
 
-# datas = [ 
-#                 {
-#                         "nome": "Luana",
-#                         "descricao": "ela eh muito doidona"
-#                 },
+datas = [ 
+                {
+                        "nome": "InfraCom",
+                        "descricao": "Cadeira do quinto periodo, Professor Jose Suruagy"
+                },
 
-#                 {
-#                         "nome": "Leticia",
-#                         "descricao": "ela eh muito doidona tbm"
-#                 },
+                {
+                        "nome": "Estatistica",
+                        "descricao": "Cadeira do quarto periodo"
+                },
 
-#                 {
-#                         "nome": "Felipe",
-#                         "descricao": "Ele eh o mais inteligente"
-#                 },
+                {
+                        "nome": "Hardware",
+                        "descricao": "Cadeira do terceiro periodo, Professora Edna"
+                },
 
-#                 {
-#                         "nome": "Dudu",
-#                         "descricao": "Leticia so pega no pe do coitado"
-#                 },
+                {
+                        "nome": "Software",
+                        "descricao": "Cadeira do terceiro periodo, Professor Eduardo"
+                },
 
-#                 {
-#                         "nome": "Renato",
-#                         "descricao": "Coitado, namora com Luana"
-#                 }
-# ]
+                {
+                        "nome": "IP",
+                        "descricao": "Cadeira do primeiro periodo, Professor Alexandre"
+                }
+]
 
 while True:
         nome = '192.168.0.21'
@@ -41,8 +41,8 @@ while True:
 
         print('Comunicando com DNS')
         sok =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
-        message = 'fb.com'
-        sok.sendto(bytes(message, 'utf-8'), (nome, porta)) 
+        dominio = 'fb.com'
+        sok.sendto(bytes(dominio, 'utf-8'), (nome, porta)) 
         sok.close()
         print('Fechei comunicação com servidor')
         sok.close()

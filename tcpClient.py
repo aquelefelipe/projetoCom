@@ -15,8 +15,12 @@ def tcpServerComunication(add):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as clientSocket: ##cria o socket do cliente; o primeiro parametro indica que a rede subjacente está
         print('add:', add)
         #addr = (serverName, serverPort)    
-        serverName = add[2:15]
-        serverPort = int(add[18:23])   
+        # serverName = add[2:15]
+        # serverPort = int(add[18:23]) 
+
+        serverName = add
+        serverPort = 12000
+
         #essa tupla tem que ser um inteiro!!!!!!!                                                      #usando ipv4 e o sock_stream indica que é uma conexão tcp
         clientSocket.connect((serverName, serverPort))    #addr ta dando merda                    ##essa linha estabele a conexão com o socket servidor
                                                                         #por meio do connect é executada a apresentação de 3 vias
@@ -42,15 +46,20 @@ def tcpServerComunication(add):
             request = input()
 
 def dnsServerComunication():
-    nomeDNS = '172.22.67.194'
-    portaDNS = 12000
+    nomeDNS = '192.168.0.21'  #FELIPE
+    # nomeDNS = '172.22.67.194' #LUANA
+    portaDNS = 12001
+    portaDNS2 = 12002
     print('Digite site:')
     message = input(" ")
 
-    sok =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
-    sok.sendto(bytes(message, 'utf-8'), (nomeDNS, portaDNS)) 
+    sok =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+    sok.sendto(bytes(message, 'utf-8'), (nomeDNS, portaDNS))
 
     dad, addr = sok.recvfrom(1024)
+
+    print(dad.decode())
     #dad vai ser o adress do servidorTCP
     while True:    
         
@@ -67,8 +76,8 @@ def main():
     print('Iniciando execução...')
     
     end = dnsServerComunication() ##end vai receber o dominio/ip do servidor
-    print(end[1:16]) 
-    print(end[18:23])
+    # print(end[1:16]) 
+    # print(end[18:23])
     print('o addr tem', end)      ##endereço do tcpServer
     tcpServerComunication(end)    ##comunicação com o servidor
 
