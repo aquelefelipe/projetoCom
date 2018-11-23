@@ -36,15 +36,15 @@ datas = [
 ]
 
 while True:
-        nome = '192.168.0.21'
-        porta = 12000
+        nomeDNS = '172.22.67.194'
+        portaDNS = 12000
 
         print('Comunicando com DNS')
         sok =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
         dominio = 'fb.com'
-        sok.sendto(bytes(dominio, 'utf-8'), (nome, porta)) 
+        sok.sendto(bytes(dominio, 'utf-8'), (nomeDNS, portaDNS)) 
         sok.close()
-        print('Fechei comunicação com servidor')
+        print('Fechei comunicação com DNSserver')
         sok.close()
         break
 
@@ -53,7 +53,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serverSocket:
         serverSocket.listen(3)                              ##esse parametro especifica o num de conexoes tcp na fila; e o listen()
                                                         ##faz com que o servidor escute as requisições tcp do cliente
 
-        print ('This server is ready to receive')
+        print ('--Nova conexão--')
         while True:
                                                         ##connectioSocket vai ser um novo socket dedicado a esse cliente especifico
                 connectionSocket, addr = serverSocket.accept()

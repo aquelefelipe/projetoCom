@@ -9,17 +9,19 @@ import socket
 ### faz a comunicação cliente/servidor
 def tcpServerComunication(add):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as clientSocket: ##cria o socket do cliente; o primeiro parametro indica que a rede subjacente está
-        print('add:', add)                                                  ##add = (serverName, serverPort)    
+        #print('add:', add)                                                  ##add = (serverName, serverPort)    
 
         serverName = add
         serverPort = 12000
                                                                         #usando ipv4 e o sock_stream indica que é uma conexão tcp
         clientSocket.connect((serverName, serverPort))                  ##essa linha estabele a conexão com o socket servidor
-                                                                        #por meio do connect é executada a apresentação de 3 vias
+         
+        print('\n')                                                                #por meio do connect é executada a apresentação de 3 vias
         print('---DIGITE A OPÇÃO DESEJADA : -----')
         print('----->ENCERRAR ')
         print('----->LISTAR ')
-        print('----->ARQUIVO  ')                                                            
+        print('----->ARQUIVO  ')
+        print('\n')                                                                
         request = input()         
         while True:
         
@@ -27,15 +29,19 @@ def tcpServerComunication(add):
             modifiedSentence= clientSocket.recv(1024)         
         
             if request == "ENCERRAR" :
+                print('\n')    
                 print(f'Encerrando conexão com Servidor: {add[0]}')
                 clientSocket.close()
                 break
         
             elif request == "LISTAR":
+                print('\n')    
                 print("Listando arquivos existentes...")
+                print('\n')    
                 print(modifiedSentence.decode())
         
             elif request[:7] == "ARQUIVO":
+                print('\n')    
                 print("Arquivo solicitado: \n")
                 print(modifiedSentence.decode())
 
@@ -43,8 +49,8 @@ def tcpServerComunication(add):
 
 #### dnsServerComunication() faz a comunicação cliente/dns
 def dnsServerComunication():
-    nomeDNS = '192.168.0.21'  #FELIPE
-    # nomeDNS = '172.22.67.194' #LUANA
+    #nomeDNS = '192.168.0.21'  #FELIPE
+    nomeDNS = '172.22.67.194' #LUANA
     portaDNS = 12001
 
     print('Digite site:')
@@ -56,7 +62,6 @@ def dnsServerComunication():
 
     dad, addr = sok.recvfrom(1024)
 
-    print(dad.decode())
     #dad vai ser o adress do servidorTCP
     while True:    
         
@@ -72,7 +77,7 @@ def main():
     print('Iniciando execução...')
     
     end = dnsServerComunication() ##end vai receber o dominio/ip do servidor
-    print('o addr tem', end)      ##endereço do tcpServer
+
     tcpServerComunication(end)    ##comunicação com o servidor
 
 ###encerra execução cliente

@@ -1,8 +1,8 @@
 
 import socket, json
 
-#serverHost = '172.22.67.194' #cin lua
-serverHost = '192.168.0.13' ##casa de lua
+serverHost = '172.22.67.194' #cin lua
+#serverHost = '192.168.0.13' ##casa de lua
 #serverHost = '192.168.0.21'  #FELIPE
 serverPort1 = 12000
 serverPort2 = 12001
@@ -63,20 +63,19 @@ def clienteCom():
 
         while True:
                 data, addr = sock.recvfrom(1024)
-                print(f'Cliente solicitando: {data.decode()}')
-                print(f'Endereço origem: {addr[0]}')
+                print(f'Cliente  {addr[0]} solicitando: {data.decode()}')
                 dominio = searchDomain(data.decode())
-                print(dominio)
+                #print(dominio)
                 sock.sendto(bytes(dominio, "utf-8"), addr)
                 if dominio != "Dominio não encontrado":
                         sock.close()
-                        print('Conexão cliente encerrada')
+                        print('Encerrando conexão com cliente...')
                         break
         
 
 ## searchDomain procura pelo dominio solicitado pelo cliente
 def searchDomain(domain): 
-        print(f'aqui eh dominio: {domain}')
+        #print(f'aqui eh dominio: {domain}')
         for x in dados:
                 if x["nome"] == domain:
                         return x["addr"]
@@ -87,7 +86,7 @@ def main():
         print('Iniciando execução do DNS...')
 
         enderServer = serverCom()
-        print('Conexão com servidor encerrada')      
+        print('---Nova conexão ---')      
         # clienteCom(enderServer)
         clienteCom()
         print('Encerrando DNS...')
