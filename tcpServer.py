@@ -1,9 +1,12 @@
 import socket, json
 
-serverPort = 12000
+#####COMENTÁRIOS: ESTE PROGRAMA EXECUTA A FUNÇÃO DO SERVIDOR TCP E DEVE SER INICIALIZADO APÓS O DNS SERVER
+#### A variável "serverHost" deve conter o ip da máquina que está rodando o código
+#### A variável "nomeDNS" deve conter o ip da máquina que está rodando o código dnsServer.py
+####
 
+serverPort = 12000
 serverHost = '172.22.67.194' #LUANA
-#serverHost = '192.168.0.21'  #FELIPE
 
 nomes = b''
 response = b''
@@ -74,12 +77,15 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serverSocket:
                                 connectionSocket.send(nomes)
 
                         elif sentence.decode()[:7] == "ARQUIVO" :
-                                response = b''
+                                response = b'Arquivo não encontrado!'
                                 for x in datas:
                                         if sentence.decode()[8:] == x["nome"] :
                                                 response = bytes(x["descricao"], "utf-8")
-                                
+                                                
+                                        
                                 connectionSocket.sendall(response)
+                                
+                                
 
                         elif sentence.decode() == "ENCERRAR":
                                 connectionSocket.sendall(b'conexao encerrada')
@@ -89,21 +95,16 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serverSocket:
                                 response = b''
                                 response = b'Operacao nao identificada pelo Servidor'
                                 connectionSocket.send(response)
+
         
                 connectionSocket.close()
                 break
         
 
-##nesse programa, apos ser enviada a sentença modificada, fechamos o socket da conexao
-#mas o serverSocket permanece aberto, dai outro cliente pode "bater na porta"
-#e enviar uma sentence ao servidor p que seja modificada
 
 #FUNÇÕES DO SERVIDOR
 # 1. Listar arquivos do servidor CÓDIGO 1
 # 2. Sinalizar que arquivo não existe 
 # 3. Enviar arquivo para cliente solicitante CÓDIGO 2
+# 4. Encerrar conexão
 
-#012345678910
-#ENCERRAR
-#LISTAR
-#ARQUIVO X

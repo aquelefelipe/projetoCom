@@ -1,10 +1,10 @@
 
 import socket
 
-#serverName = '192.168.0.21' #LIPE IP
-#serverName = '172.22.67.194' #LUA IP
-#serverPort = 12000
-
+####ESSE PROGRAMA RODA O CLIENTE; DEVE SER INICIALIZADO APÓS O DNS SERVER E O SERVIDOR.
+###Na função, dnsServerComunication(), a variavel nomeDns deve ser setada com o IP da máquina que está rodando o código do dnsServer
+### quando for solicitado o site, digite: "fb.com"
+###Na função, tcpServerComunication() não é necessária nenhuma modificação;
 
 ### faz a comunicação cliente/servidor
 def tcpServerComunication(add):
@@ -13,14 +13,14 @@ def tcpServerComunication(add):
 
         serverName = add
         serverPort = 12000
-                                                                        #usando ipv4 e o sock_stream indica que é uma conexão tcp
-        clientSocket.connect((serverName, serverPort))                  ##essa linha estabele a conexão com o socket servidor
+                                                                            ##usando ipv4 e o sock_stream indica que é uma conexão tcp   
+        clientSocket.connect((serverName, serverPort))                      ##essa linha estabele a conexão com o socket servidor
          
-        print('\n')                                                                #por meio do connect é executada a apresentação de 3 vias
+        print('\n')                                                           ##por meio do connect é executada a apresentação de 3 vias
         print('---DIGITE A OPÇÃO DESEJADA : -----')
         print('----->ENCERRAR ')
         print('----->LISTAR ')
-        print('----->ARQUIVO  ')
+        print('----->ARQUIVO <nome do arquivo> ')
         print('\n')                                                                
         request = input()         
         while True:
@@ -45,13 +45,16 @@ def tcpServerComunication(add):
                 print("Arquivo solicitado: \n")
                 print(modifiedSentence.decode())
 
+            else:
+                print(modifiedSentence.decode())
+
             request = input()
 
-#### dnsServerComunication() faz a comunicação cliente/dns
+#### dnsServerComunication() faz a comunicação cliente/dns ###
 def dnsServerComunication():
-    #nomeDNS = '192.168.0.21'  #FELIPE
+
     nomeDNS = '172.22.67.194' #LUANA
-    portaDNS = 12001
+    portaDNS = 12000
 
     print('Digite site:')
     message = input(" ")
@@ -60,9 +63,9 @@ def dnsServerComunication():
 
     sok.sendto(bytes(message, 'utf-8'), (nomeDNS, portaDNS))
 
+    #dad vai ser o adress do servidorTCP com quem o cliente vai estabelecer conexão
     dad, addr = sok.recvfrom(1024)
 
-    #dad vai ser o adress do servidorTCP
     while True:    
         
         print (f'Endereço do site solicitado: \n', dad.decode())
@@ -80,32 +83,8 @@ def main():
 
     tcpServerComunication(end)    ##comunicação com o servidor
 
-###encerra execução cliente
+###fim da execução cliente
 
 if __name__ == "__main__":
     main()
-
-
-
-        # if modifiedSentence.decode() == "ENCERRAR":
-        #     print('Encerrando conexão com Servidor: {addr}\n')
-        #     clientSocket.close()                                          ##encerra a conexao tcp e fecha o socket ela faz o tcp do cliente enviar uma mensagem tcp ao tcp no servidor
-        #     break
-    
-        # elif modifiedSentence.decode() == 'ARQUIVOS' :
-        #                                                         #print (f'Lista de arquivos do servidor: ', modifiedSentence.decode())
-        #     i = 0
-        #     while i<5:
-        #         print('recebendo arquivos:\n') 
-        #         arquivo = clientSocket.recv(1024)
-        #         print (f'Arquivo: \n', arquivo.decode())
-        #         i += 1
-        #     print('Digite proximo comando :')
-        
-        # elif:                                                   ##Digite qualquer outra coisa
-        #     print('Qual o arquivo que você deseja?')
-        #     clientSocket.sendall(bytes(input(" "), 'utf-8'))
-        #     novoArquivo = clientSocket.recv(1024)
-        #     print (f'Arquivo: ', novoArquivo.decode())
-
 
