@@ -1,15 +1,14 @@
 
 import socket, json
 
-#serverHost = '172.22.67.194' #LUANA IP
-serverHost = '192.168.0.21'  #FELIPE
+#serverHost = '172.22.67.194' #cin lua
+serverHost = '192.168.0.13' ##casa de lua
+#serverHost = '192.168.0.21'  #FELIPE
 serverPort1 = 12000
 serverPort2 = 12001
 serverPort3 = 12002
 
 dados = []
-
-##TO USANDO O dnsclient.py na pasta documentos pra testar
 
 def addDadosJSON(nome, addr):
         doc = {
@@ -19,20 +18,17 @@ def addDadosJSON(nome, addr):
 
         dados.append(doc)
 
-##AGORA FALTA PEGAR O ENDEREÇO DO SERVIDOR
+##serverCom faz a comunicação DNS/SERVIDOR      
 def serverCom():
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
         sock.bind((serverHost, serverPort1))
 
         while True: 
-                print('Entrei no while servidor')
                 data, addr = sock.recvfrom(1024) 
-                print(f'Recebendo dados from: {addr}')
-                #dt = data.decode()
-                #print(f'endereço do servidor: ', dt) 
-                # print(f'isso eh dado: {data.decode()}, isso eh endereço: {addr[0]}')
+                print(f'Recebendo dados do SERVIDOR: {addr}')
                 addDadosJSON(data.decode(), addr[0])
-                print(dados)
+                #print(dados)
+                print('Encerrando conexão com SERVIDOR...')
                 sock.close()
                 break
         return addr
@@ -59,41 +55,42 @@ def serverCom():
 #                 break
 #         sock.close()
 
+
+##  clientCom faz a comunicação dns/cliente
 def clienteCom():
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.bind((serverHost, serverPort2))
 
         while True:
                 data, addr = sock.recvfrom(1024)
-                print(f'Dado recebido: {data.decode()}')
+                print(f'Cliente solicitando: {data.decode()}')
                 print(f'Endereço origem: {addr[0]}')
                 dominio = searchDomain(data.decode())
                 print(dominio)
                 sock.sendto(bytes(dominio, "utf-8"), addr)
                 if dominio != "Dominio não encontrado":
                         sock.close()
-                        print('Conexão fechada')
+                        print('Conexão cliente encerrada')
                         break
         
-#TA FALTANDO CONFERIR CONFIABILIDADE
 
-def searchDomain(domain):
+## searchDomain procura pelo dominio solicitado pelo cliente
+def searchDomain(domain): 
         print(f'aqui eh dominio: {domain}')
         for x in dados:
                 if x["nome"] == domain:
                         return x["addr"]
         return "Dominio não encontrado"
 
+##MAIN
 def main():
         print('Iniciando execução do DNS...')
 
         enderServer = serverCom()
-        print('Encerrei comunicação com servidor')
+        print('Conexão com servidor encerrada')      
         # clienteCom(enderServer)
         clienteCom()
         print('Encerrando DNS...')
-
-###encerra execução cliente
 
 if __name__ == "__main__":
     main()

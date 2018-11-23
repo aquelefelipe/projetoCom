@@ -2,8 +2,8 @@ import socket, json
 
 serverPort = 12000
 
-#serverHost = '172.22.67.194' #LUANA
-serverHost = '192.168.0.21'  #FELIPE
+serverHost = '172.22.67.194' #LUANA
+#serverHost = '192.168.0.21'  #FELIPE
 
 nomes = b''
 response = b''

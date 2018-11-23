@@ -4,27 +4,22 @@ import socket
 #serverName = '192.168.0.21' #LIPE IP
 #serverName = '172.22.67.194' #LUA IP
 #serverPort = 12000
-'''s = "Pedro, Paulo e Maria"
- print s[0:5]
-Pedro
- print s[7:12]
-Paulo
-('172.22.67.194', 50031)'''
 
+
+### faz a comunicação cliente/servidor
 def tcpServerComunication(add):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as clientSocket: ##cria o socket do cliente; o primeiro parametro indica que a rede subjacente está
-        print('add:', add)
-        #addr = (serverName, serverPort)    
-        # serverName = add[2:15]
-        # serverPort = int(add[18:23]) 
+        print('add:', add)                                                  ##add = (serverName, serverPort)    
 
         serverName = add
         serverPort = 12000
-
-        #essa tupla tem que ser um inteiro!!!!!!!                                                      #usando ipv4 e o sock_stream indica que é uma conexão tcp
-        clientSocket.connect((serverName, serverPort))    #addr ta dando merda                    ##essa linha estabele a conexão com o socket servidor
+                                                                        #usando ipv4 e o sock_stream indica que é uma conexão tcp
+        clientSocket.connect((serverName, serverPort))                  ##essa linha estabele a conexão com o socket servidor
                                                                         #por meio do connect é executada a apresentação de 3 vias
-        print('Digite o que desejas ')                                                            
+        print('---DIGITE A OPÇÃO DESEJADA : -----')
+        print('----->ENCERRAR ')
+        print('----->LISTAR ')
+        print('----->ARQUIVO  ')                                                            
         request = input()         
         while True:
         
@@ -37,19 +32,21 @@ def tcpServerComunication(add):
                 break
         
             elif request == "LISTAR":
-                print("Qual arquivo você deseja?")
+                print("Listando arquivos existentes...")
                 print(modifiedSentence.decode())
         
             elif request[:7] == "ARQUIVO":
+                print("Arquivo solicitado: \n")
                 print(modifiedSentence.decode())
 
             request = input()
 
+#### dnsServerComunication() faz a comunicação cliente/dns
 def dnsServerComunication():
     nomeDNS = '192.168.0.21'  #FELIPE
     # nomeDNS = '172.22.67.194' #LUANA
     portaDNS = 12001
-    portaDNS2 = 12002
+
     print('Digite site:')
     message = input(" ")
 
@@ -63,9 +60,8 @@ def dnsServerComunication():
     #dad vai ser o adress do servidorTCP
     while True:    
         
-        print('Waiting to receive...')
-        print (f'Endereço do site: \n', dad.decode())
-        print('Closing socket...')
+        print (f'Endereço do site solicitado: \n', dad.decode())
+        print('Encerrando conexão com DNS...')
         break
     sok.close()
     return dad.decode()
@@ -76,8 +72,6 @@ def main():
     print('Iniciando execução...')
     
     end = dnsServerComunication() ##end vai receber o dominio/ip do servidor
-    # print(end[1:16]) 
-    # print(end[18:23])
     print('o addr tem', end)      ##endereço do tcpServer
     tcpServerComunication(end)    ##comunicação com o servidor
 
@@ -110,9 +104,3 @@ if __name__ == "__main__":
         #     print (f'Arquivo: ', novoArquivo.decode())
 
 
-######################
-#1.criar dns e fazer repositorio
-#2.criar lista de arquivos no servidor
-#3.fazer as funções do servidor p listar, printar 
-#4. função p encerrar conexão no cliente
-#alice caimmi - louca
