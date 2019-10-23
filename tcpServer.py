@@ -8,7 +8,7 @@ import socket, json
 serverPort = 12000
 serverHost = '172.22.67.194' #LUANA
 
-nomes = b''
+nomes = b''          ## b'' it is for changing the worlds for byte type
 response = b''
 
 datas = [ 
