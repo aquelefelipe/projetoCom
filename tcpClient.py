@@ -11,8 +11,8 @@ def tcpServerComunication(add):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as clientSocket: ##cria o socket do cliente; o primeiro parametro indica que a rede subjacente está
         #print('add:', add)                                                  ##add = (serverName, serverPort)    
 
-        serverName = add
-        serverPort = 12000
+        serverName = add  ## add contain the adress of the server
+        serverPort = 12000 ## serverPort is the port od the communication
                                                                             ##usando ipv4 e o sock_stream indica que é uma conexão tcp   
         clientSocket.connect((serverName, serverPort))                      ##essa linha estabele a conexão com o socket servidor
          
@@ -53,7 +53,7 @@ def tcpServerComunication(add):
 #### dnsServerComunication() faz a comunicação cliente/dns ###
 def dnsServerComunication():
 
-    nomeDNS = '172.22.67.194' #LUANA
+    nomeDNS = '172.22.67.194' #é o endereço ip da maquina
     portaDNS = 12000
 
     print('Digite site:')
